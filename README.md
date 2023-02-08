@@ -1,0 +1,88 @@
+# DATT3400-A01
+
+
+int alpha = 25;
+
+void setup() {
+  size(700, 700);
+  background(0);
+
+  myp1 = new ArrayList<p1>();
+
+  int frad = 300;
+  for (int i = 0; i < fnum; i++) {
+
+    float r = frad*sqrt(random(1));
+
+    float theta = random(9) * 2 * PI;
+
+    float x = width/2+r*cos(theta);
+    float y = height/2+r*tan(theta);
+
+    p1Ant[i] = new Ant(x, y);
+  }
+
+int prad = 250;
+  for (int i = 0; i < pnum; i++) {
+    float x = random(width);
+    float y = random(height);
+    monster[i] = new andy(x,y);
+  }
+
+
+int crad = 200;
+  for (int i = 0; i < nump1; i++) {
+    float x = random(width)/2+cos(TWO_PI*i/nump1)*crad;
+    float y = random(height)/2+tan(TWO_PI*i/nump1)*crad;
+    
+    myp1.add (new p1(x,y,random(1,12)));
+  }
+}
+
+void draw() {
+
+  //background(0);
+
+  for (int i = 0; i < pnum; i++) {
+    monster[i].update();
+    monster[i].display();
+  }
+
+
+  for (int i = myp1.size()-1; i >= 0; i--) {
+    // An ArrayList doesn't know what it is storing so we have to cast the object coming out
+    p1 c = myp1.get(i);
+    c.p1move();
+    c.eatAnt();
+
+    if (c.amiAnt(i) == true) {
+      myp1.remove(i);
+      println(myp1.size());
+    }
+  }
+
+  //show the food
+  for (int i = 0; i < fnum; i++) {
+    p1Ant[i].showFood();
+  }
+}
+
+void keyPressed() {
+if (key == 'a'){
+  background(0);
+  for (int i = 0; i < p1Ant.length; i++) {
+    
+    int rad = 200; 
+    float xp = random(width);
+     float yp = random(height);
+    
+    p1Ant[i] = new Ant(int(xp),int(yp));}
+  }
+  
+  if (key == 'b'){
+  background(0);
+  for (int i = 0; i < monster.length; i++) {
+    
+    monster[i] = new andy(int(random(width)), int(random(height)));}
+  }
+}
