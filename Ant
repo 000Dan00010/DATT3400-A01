@@ -1,0 +1,19 @@
+class Ant{
+  
+  // food position
+  float x;
+  float y;
+  
+  boolean eaten = false;
+  
+  Ant(float x, float y){
+   this.x = x;
+   this.y = y;
+  }
+  
+  void showFood(){
+   stroke(228,109,10);
+   strokeWeight(0.5);
+   point(x,y);
+  }
+}
