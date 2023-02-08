@@ -1,0 +1,87 @@
+class p1{
+
+  float posx;
+  float posy;
+
+  float opx;
+  float opy;
+
+  float step = random(4, 20);
+  float eatit = random(2, 10);
+
+  float gather = eatit+3;
+
+
+  p1(float posx, float posy, float step) {
+    this.posx = posx;
+    this.posy = posy;
+    this.step = step;
+
+    opx = posx;
+    opy = posy;
+  }
+
+  void p1move() {
+    posx += random(-step, step);
+    posy += random(-step, step);
+
+
+    noStroke();
+    fill(255, alpha);
+    ellipse(posx, posy, 3, 3);
+    stroke(154, 123, 79, alpha*92);
+    strokeWeight(0.3);
+    line(posx, posy, opx, opy);
+  }
+
+  
+  void eatAnt() {
+    for (int i = myp1.size()-1; i >= 0; i--) {
+
+      for (int j = 0; j < fnum; j++) {
+
+        if (dist(myp1.get(i).posx, myp1.get(i).posy, p1Ant[j].x, p1Ant[j].y) <= eatit && p1Ant[j].eaten == false) {
+
+
+          float ru = eatit*sqrt(random(1));
+          float rtheta = random(1) * 2 * PI;
+
+
+          p1Ant[j].x = opx+ru*cos(rtheta);
+          p1Ant[j].y = opy+ru*sin(rtheta);
+
+          posx = opx;
+          posy = opy;
+
+
+          p1Ant[j].eaten = false;
+        }
+      }
+    }
+  }
+
+
+  boolean amiAnt(int i) {
+    boolean eat = false;
+
+    for (int j = 0; j < pnum; j++) {
+
+      if (dist(myp1.get(i).posx, myp1.get(i).posy, monster[j].pos.x, monster[j].pos.y) <= 50) {
+        monster[j].acx = myp1.get(i).posx;
+        monster[j].acy = myp1.get(i).posy;
+
+        if (dist(myp1.get(i).posx, myp1.get(i).posy, monster[j].pos.x, monster[j].pos.y) <= 10) {
+          stroke(255, 100, 210);
+          line(myp1.get(i).posx, myp1.get(i).posy, monster[j].pos.x, monster[j].pos.y);
+
+          stroke(149,179,215);
+          noFill();
+          ellipse(monster[j].pos.x, monster[j].pos.y, 50, 50);
+
+          eat = false;
+        }
+      }
+    }
+    return eat;
+  }
+}
